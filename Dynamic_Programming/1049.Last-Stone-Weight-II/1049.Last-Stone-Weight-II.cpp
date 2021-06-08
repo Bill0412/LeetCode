@@ -1,26 +1,16 @@
 class Solution {
+    
 public:
-    int lastStoneWeightII(vector<int>& stones) 
-    {
-        unordered_set<int>Set({0});
-        
-        for (auto x:stones)
-        {
-            auto Set_temp = Set;
-            Set.clear();
-            for (auto s:Set_temp)
-            {
-                Set.insert(s+x);
-                Set.insert(s-x);
-            } 
+    int lastStoneWeightII(vector<int>& stones) {
+        set<int> s{0};
+        for(auto x: stones) {
+            set<int> tmp;
+            for(auto t: s) {
+                tmp.insert(t-x);
+                tmp.insert(t+x);
+            }
+            s = tmp;
         }
-        
-        int result = INT_MAX;
-        for (auto x:Set)
-        {
-            if (x>=0 && result>x)
-                result =x;
-        }
-        return result;        
-    }
+        return *s.lower_bound(0);
+    }   
 };
